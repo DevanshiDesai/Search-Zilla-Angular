@@ -28,7 +28,7 @@ app.get('/', function (req, res) {
 app.get('/api/getDataForAutoComplete', async function (req, res, next) {
   keyword = req.query['keyword']
   var autocompleteList = []
-  axios.get('https://app.ticketmaster.com/discovery/v2/suggest?apikey=90gXEdRlVnZgTqo4zfSfAh3JkIZ9IvKR&keyword=' + keyword)
+  axios.get('https://app.ticketmaster.com/discovery/v2/suggest?apikey=<API KEY>&keyword=' + keyword)
     .then(response => {
       if (response.status == 200) {
         resp = response.data['_embedded']['attractions']
@@ -51,7 +51,7 @@ app.get('/api/getDataForAutoComplete', async function (req, res, next) {
 
 app.get('/api/getEnteredLoc', async function (req, res, next) {
   loc = req.query['location']
-  axios.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + loc + "&key=AIzaSyDxZLg_I5J7Q4r6GbVspr6pR2JdLliTxtQ")
+  axios.get("https://maps.googleapis.com/maps/api/geocode/json?address=" + loc + "&key=<API Key>")
     .then(response => {
       if (response.status == 200) {
         latlong = response.data['results'][0]['geometry']['location']
@@ -70,7 +70,7 @@ app.get('/api/getEnteredLoc', async function (req, res, next) {
 
 app.get('/api/getDetails', async function (req, res, next) {
   id = req.query['id']
-  axios.get("https://app.ticketmaster.com/discovery/v2/events/" + id + "?apikey=90gXEdRlVnZgTqo4zfSfAh3JkIZ9IvKR&").then(async response => {
+  axios.get("https://app.ticketmaster.com/discovery/v2/events/" + id + "?apikey=<API Key>").then(async response => {
     if (response.status == 200) {
       var event = response.data
       var eve = {}
@@ -233,9 +233,9 @@ app.get('/api/getResultsData', async function (req, res, next) {
   long = req.query['long']
   geohashVal = geohash.encode(lat, long);
   if (category != "default")
-    url = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=90gXEdRlVnZgTqo4zfSfAh3JkIZ9IvKR&keyword=" + keyword + "&segmentId=" + category + "&radius=" + distance + "&unit" + units + "geoPoint=" + geohashVal + "&sort=date,asc"
+    url = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=<API Key>&keyword=" + keyword + "&segmentId=" + category + "&radius=" + distance + "&unit" + units + "geoPoint=" + geohashVal + "&sort=date,asc"
   else
-    url = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=90gXEdRlVnZgTqo4zfSfAh3JkIZ9IvKR&keyword=" + keyword + "&radius=" + distance + "&unit=" + units + "&geoPoint=" + geohashVal + "&sort=date,asc"
+    url = "https://app.ticketmaster.com/discovery/v2/events.json?apikey=<API Key>&keyword=" + keyword + "&radius=" + distance + "&unit=" + units + "&geoPoint=" + geohashVal + "&sort=date,asc"
   axios(url).then(response => {
     if (response.status == 200) {
       var listOfEvents = []
